@@ -1,0 +1,20 @@
+# Config related
+config.ini
+
+# Images related
+**/images/*
+**/output/*
+
+# Prompts related
+**/prompts.*
+
+# IDE related
+.vscode
+
+# Cache related
+**/__pycache__
+
+# VENV Realated
+venv
+myenv
+env
