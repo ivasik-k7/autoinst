@@ -2,7 +2,7 @@ import cv2
 import os
 import argparse
 from enum import Enum
-from PIL import Image, ImageEnhance, ImageFilter
+from PIL import Image, ImageEnhance
 
 
 class UpscaleCategory(Enum):
@@ -10,15 +10,6 @@ class UpscaleCategory(Enum):
     x2 = 2
     x3 = 3
     x4 = 4
-
-
-# TODO LIST
-
-# реалізувати ступіть upscaling
-# реалізувати механізм аргрументів
-# підібрати еффективний фільтр для покращення контрасності (якості зображення)
-# a. підвищенні рівень DPI (Inch per Pixel)
-# b.
 
 
 def is_image(file_path):
@@ -72,7 +63,7 @@ def save_image(image, output_dir, filename):
 
     file_path = os.path.join(output_dir, filename)
 
-    image.save(file_path, dpi=(300, 300), quality=95)
+    image.save(file_path, dpi=(300, 300), quality=200)
 
 
 def main(
@@ -81,8 +72,6 @@ def main(
     output_dir: str,
 ) -> None:
     images = find_images(input_dir)
-
-    print(images)
 
     for path in images:
         filename = os.path.basename(path)
@@ -116,7 +105,7 @@ if __name__ == "__main__":
         "--output-dir",
         "-o",
         type=str,
-        default="{}/output".format(os.path.abspath(__file__)),
+        default="{}/output".format(os.path.dirname(os.path.abspath(__file__))),
         help="Output directory for images (default: output)",
     )
 

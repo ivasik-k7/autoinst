@@ -35,7 +35,7 @@ def format_content(template: str) -> str:
 
 
 def save_images(
-    images: list,
+    images: List,
     folder_path: str,
     prompt: str,
 ):

@@ -3,13 +3,14 @@ import os
 
 import lib.utils as utils
 
-from lib.ai import DiffusionGenerator
-from lib.uploader import Uploader
+from lib.ai import DiffusionStrategy, GeneratorStrategy
 
 
 def main(args):
     high_noise_frac = 0.8
-    pipeline = DiffusionGenerator.load_diffusion_pipeline(
+    strategy: DiffusionStrategy = GeneratorStrategy()
+
+    pipeline = strategy.pipeline(
         "stabilityai/stable-diffusion-2-1",
         use_safetensors=True,
     )
@@ -17,7 +18,7 @@ def main(args):
     utils.append_to_file("prompts.txt", args.prompt)
 
     for _ in range(args.num_images):
-        images = DiffusionGenerator.generate_images(
+        images = strategy.execute(
             pipeline=pipeline,
             prompt=args.prompt,
             num_inference_steps=args.num_interfaces,
@@ -68,7 +69,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--num_interfaces",
         type=int,
-        default=30,
+        default=1,
         help="Number of inference steps",
     )
     parser.add_argument(
